@@ -1,0 +1,62 @@
+<form action="/sessions/" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="submit" value="Log Out">
+</form>
+
+<h2>Name:    <%= @user.first_name %> <%= @user.last_name %></h2>
+<h2>Account Balance: $<%= @user.balance %></h2>
+
+<%= flash[:errors] %>
+<%= flash[:error] %>
+
+<h1>List of people in need of help:</h1>
+<table border="1">
+  <tr>
+    <td>Name</td>
+    <td>Need Money For</td>
+    <td>Reason for Loan</td>
+    <td>Amount Needed</td>
+    <td>Amount Raised</td>
+    <td>Action</td>
+  </tr>
+  <% @borrowers.each do |b| %>
+    <tr>
+      <td><%= b.first_name %> <%= b.last_name %></td>
+      <td><%= b.title %></td>
+      <td><%= b.description %></td>
+      <td>$<%= b.amountneed %></td>
+      <td>$<%= b.amountraised %></td>
+      <td><form action="/lenders" method="post">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="hidden" name="borrower" value="<%= b.id %>">
+        <input type="number" name="amount" step="0.01" min=0>
+        <input type="submit" value="Lend">
+      </form></td>
+    </tr>
+  <% end %>
+</table>
+
+<br>
+
+<h1>List of People you lend money to:</h1>
+<table border="1">
+  <tr>
+    <td>Name</td>
+    <td>Need Money For</td>
+    <td>Reason for Loan</td>
+    <td>Amount Needed</td>
+    <td>Amount Raised</td>
+    <td>Amount Lent</td>
+  </tr>
+  <% @myborrowers.each do |b| %>
+    <tr>
+      <td><%= b.first_name %> <%= b.last_name %></td>
+      <td><%= b.title %></td>
+      <td><%= b.description %></td>
+      <td>$<%= b.amountneed %></td>
+      <td>$<%= b.amountraised %></td>
+      <td>$<%= b.transactions.where(lender_id: current_lender.id).sum(:amount) %></td>
+    </tr>
+  <% end %>
+</table>

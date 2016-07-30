@@ -1,0 +1,40 @@
+<h1>Register Here</h1>
+
+<%= flash[:lender_errors] %>
+
+<fieldset>
+  <legend><u>Lender</u></legend>
+  <form action="/user/createLender" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    First Name: <input type="text" name="lender[first_name]">
+    Last Name: <input type="text" name="lender[last_name]">
+    Email: <input type="text" name="lender[email]">
+    Password: <input type="password" name="lender[password]">
+    Confirm Password: <input type="password" name="lender[password_confirmation]">
+    Account Balance: <input name="lender[balance]" type="number" step="0.01" min=0>
+    <input type="submit" value="Register">
+  </form>
+</fieldset>
+
+<a href="/sessions/lenders/login">Already a member?</a>
+
+<br>
+<%= flash[:borrower_errors] %>
+
+<fieldset>
+  <legend><u>Borrower</u></legend>
+  <form action="/user/createBorrower" method="post">
+    <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+    First Name: <input type="text" name="borrower[first_name]">
+    Last Name: <input type="text" name="borrower[last_name]">
+    Email: <input type="text" name="borrower[email]">
+    Password: <input type="password" name="borrower[password]">
+    Confirm Password: <input type="password" name="borrower[confirm_password]">
+    Need Money For: <input type="text" name="borrower[title]">
+    Description: <textarea name="borrower[description]" rows="8" cols="40"></textarea>
+    Amount Needed: <input name="borrower[amountneed]" type="number" step="0.01" min=0>
+    <input type="submit" value="Register">
+  </form>
+</fieldset>
+
+<a href="/sessions/borrowers/login">Already a member?</a>

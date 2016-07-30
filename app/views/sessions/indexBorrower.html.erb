@@ -1,0 +1,12 @@
+<h1><u>Login</u></h1>
+
+<%= flash[:error] %>
+
+<form action="/sessions/createBorrower" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  Email: <input type="text" name="email">
+  Password: <input type="password" name="password">
+  <input type="submit" value="Login">
+</form>
+
+<a href="/user">Click Here To Register</a>
